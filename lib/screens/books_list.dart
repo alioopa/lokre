@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'pdf_viewer.dart';
 
 class BooksList extends StatelessWidget {
-  BooksList({super.key});
+  BooksList({super.key, required this.onBookOpened});
+
+  final VoidCallback onBookOpened;
 
   final Stream<QuerySnapshot> _booksStream =
       FirebaseFirestore.instance.collection('books').snapshots();
@@ -33,6 +35,7 @@ class BooksList extends StatelessWidget {
             final book = docs[index];
             return GestureDetector(
               onTap: () {
+                onBookOpened();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
